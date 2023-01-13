@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
+import Carrusel from "../Details/Carrusel";
 
 
 const Home = ({ navigation , route}) => {
@@ -9,6 +10,7 @@ const Home = ({ navigation , route}) => {
             <Text>
                 {route.params.test}
             </Text>
+            <Carrusel/>
         </View>
     )
 }
