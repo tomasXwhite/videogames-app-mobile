@@ -1,23 +1,19 @@
 import React from "react";
 
-import { Text, View } from "react-native";
-import { Route, Switch, NativeRouter, TouchableWithoutFeedback } from "react-router-native"
+import { Button, Text, View } from "react-native";
 import Home from "./Home";
 
 
-const Main = () => {
+const Main = ({ navigation }) => {
+
+    const goHome = () => {
+        navigation.navigate("Home", {test: "Texto del test"})
+    }
+
     return (
-        <View style={{ flex: 1 }}>
-            <TouchableWithoutFeedback onPress={() => Alert.alert("Hola pa")}>
-                <Text>Videogames!</Text>
-            </TouchableWithoutFeedback>
-            <NativeRouter>
-                <Route path="/" exact>
-                    <Home />
-
-                </Route>
-
-            </NativeRouter>
+        <View>
+            <Text>HOLAAAAAAAAAAAAAAAAAA</Text>
+            <Button title="Test del router" onPress={goHome}/>
         </View>
     )
 }

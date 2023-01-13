@@ -2,11 +2,12 @@ import React from "react";
 import { View, Text } from "react-native";
 
 
-const Home = () => {
+const Home = ({ navigation , route}) => {
+    
     return (
         <View>
             <Text>
-                home
+                {route.params.test}
             </Text>
         </View>
     )
