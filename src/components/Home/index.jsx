@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
+import Details from "../Details/Index";
 
 
 const Home = ({ navigation , route}) => {

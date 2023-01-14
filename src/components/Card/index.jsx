@@ -1,10 +1,11 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 //Card recibe Title, Image url y Description por props
-const Card = ({title, imageUrl, description}) => {
+const Card = ({title, imageUrl, description, id, onPress}) => {
   return (
+    <TouchableOpacity onPress={() => onPress(id)}>
     <View style={styles.cardContainer}>
       <Text style={styles.cardTitle}>{title ? title : "ALVVVVVVVVVV"}</Text>
       <Image
@@ -14,6 +15,7 @@ const Card = ({title, imageUrl, description}) => {
       />
       <Text style={styles.cardText}>{description ? description : "jueguito o lo que sea"}</Text>
     </View>
+    </TouchableOpacity>
   );
 };
 
