@@ -11,8 +11,8 @@ const Main = ({ navigation }) => {
         navigation.navigate("Home", {test: "Texto del test"})
     }
 
-    const goToDetails = (id) => {
-        navigation.navigate("Details", {id: id})
+    const goToDetails = (id, title) => {
+        navigation.navigate("Details", {title: title, id})
     }
 
     return (

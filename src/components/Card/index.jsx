@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 //Card recibe Title, Image url y Description por props
 const Card = ({title, imageUrl, description, id, onPress}) => {
   return (
-    <TouchableOpacity onPress={() => onPress(id)}>
+    <TouchableOpacity onPress={() => onPress(id, title)}>
     <View style={styles.cardContainer}>
       <Text style={styles.cardTitle}>{title ? title : "ALVVVVVVVVVV"}</Text>
       <Image
