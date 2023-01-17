@@ -6,58 +6,40 @@ import axios from "axios"
 import TagPills from "./TagPills";
 import { A } from "@expo/html-elements";
 import ReqText from "./ReqText";
+import { useDispatch, useSelector } from "react-redux";
+import { getDetailsAction, getScreenshotsAction } from "../../redux/actions/details";
+import { clearDetails } from "../../redux/reducers/details/detailsReducer.slice";
+
 
 const Details = ({ navigation , route }) => {
 
-    const [screenshotsArray, setScreenshotsArray] = useState([])
     const [loadingScreenshots, setLoadingScreenshots] = useState(false)
-   
-    const [info, setInfo] = useState(null)
     const [loadingInfo, setLoadingInfo] = useState(false)
 
+    const { details, screenshots } = useSelector((state) => state.details)
+    const dispatch = useDispatch()
+
     useEffect(()=> {
-        if(!screenshotsArray.length){
+        if(!screenshots.length){
             fetchImages(route.params.id)
         }
-        if(!info){
+        if(!details){
             fetchInfo(route.params.id)
         }
+        return(() => {
+            dispatch(clearDetails())
+        })
     }, [])
 
     const fetchImages = async (id) => {
         setLoadingScreenshots(true)
-        const response = await axios.get(`https://api.rawg.io/api/games/${id}/screenshots?key=983d217f0ef244d882e526a4a5550e97`)
-        const data = response.data
-        setScreenshotsArray(data.results.map(e => e = e.image))
+        await dispatch(getDetailsAction(id))
         setLoadingScreenshots(false)
     }
 
     const fetchInfo = async (id) => {
         setLoadingInfo(true)
-        const response = await axios.get(`https://api.rawg.io/api/games/${id}?key=983d217f0ef244d882e526a4a5550e97`)
-        const data = response.data
-        const platforms = data.platforms.map(e => e = e.platform.name)
-        const tags = data.tags.map(e => e = e.name)
-        const genres = data.genres.map(e=> e = e.name)
-        let pcRequirements;
-        let pcObject = data.platforms.find(e => e.platform.id === 4)
-        if (pcObject){
-            pcRequirements = pcObject.requirements
-        }
-
-        setInfo({
-            name: data.name,
-            imageUrl: data.background_image,
-            description: data.description_raw,
-            releaseDate: data.released,
-            metacritic: data.metacritic,
-            rating: data.rating,
-            website: data.website,
-            platforms,
-            genres,
-            pcRequirements,
-            tags
-        })
+        await dispatch(getScreenshotsAction(id))
         setLoadingInfo(false)
     }
 
@@ -67,10 +49,10 @@ const Details = ({ navigation , route }) => {
     return (
         loadingInfo? <ActivityIndicator/> :
         <ScrollView>
-            {info? 
+            {details? 
             <View style={styles.infoContainer}>
-                <Image source={{uri: info.imageUrl}} style={{width: 350, height: 350, margin: 10 }}/> 
-                <Text>{info.name}</Text>
+                <Image source={{uri: details.imageUrl}} style={{width: 350, height: 350, margin: 10 }}/> 
+                <Text>{details.name}</Text>
                 <Text style={styles.title}>DESCRIPTION</Text>
                 <ViewMoreText
                     numberOfLines={4}
@@ -78,54 +60,54 @@ const Details = ({ navigation , route }) => {
                     renderViewLess={(onPress) => <Text onPress={onPress} style={{color:"blue"}}>View less</Text>}
                 >
                     <Text>
-                        {info.description}
+                        {details.description}
                     </Text>
                 </ViewMoreText>
-                {loadingScreenshots? <ActivityIndicator/> : screenshotsArray.length? <Carrusel content={screenshotsArray}/> : <Text> No hay fotos </Text>}
+                {loadingScreenshots? <ActivityIndicator/> : screenshots.length? <Carrusel content={screenshots}/> : <Text> No hay fotos </Text>}
                 <Text style={styles.title}>INFO</Text>
                 <View style={styles.row}>
                         <View style={styles.leftColumn}>
                             <Text style={styles.subtitle}>Metacritic</Text>
-                            <Text>{info.metacritic}/100</Text>
+                            <Text>{details.metacritic}/100</Text>
                         </View>
                         <View style={styles.rightColumn}>
                             <Text style={styles.subtitle}>Platforms</Text>
                             <View style={{display:"flex", flexDirection:"row", flexWrap:"wrap"}}>
-                                {info.platforms.map(e => <TagPills tag={e}/>)}
+                                {details.platforms.map(e => <TagPills tag={e}/>)}
                             </View>
                         </View>
                 </View>
                 <View style={styles.row}>
                     <View style={styles.leftColumn}>
                         <Text style={styles.subtitle}>General Rating</Text>
-                        <Text>{info.rating}/5</Text>
+                        <Text>{details.rating}/5</Text>
                     </View>
                     <View style={styles.rightColumn}>
                         <Text style={styles.subtitle}>Genres</Text>
                         <View style={{display:"flex", flexDirection:"row"}}>
-                            {info.genres.map(e => <TagPills tag={e}/>)}
+                            {details.genres.map(e => <TagPills tag={e}/>)}
                         </View>
                     </View>
                 </View>
                 <View style={styles.row}>
                     <View style={styles.leftColumn}>
                         <Text style={styles.subtitle}>Release Date</Text>
-                        <Text>{info.releaseDate}</Text>
+                        <Text>{details.releaseDate}</Text>
                     </View>
                     <View style={styles.rightColumn}>
                         <Text style={styles.subtitle}>Website</Text>
-                        <A href={info.website} style={{fontSize:12, textDecorationLine: 'underline'}}>{info.website}</A>
+                        <A href={details.website} style={{fontSize:12, textDecorationLine: 'underline'}}>{details.website}</A>
                     </View>
                 </View>
                 <Text style={styles.title}>PC REQUIREMENTS</Text>
                 <View>
-                {info.pcRequirements?
+                {details.pcRequirements?
                     <>
                     <View style={styles.row}>
-                        <ReqText requirements={info.pcRequirements.minimum} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{}}/>
+                        <ReqText requirements={details.pcRequirements.minimum} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{}}/>
                     </View>
                     <View style={styles.row}>
-                    <ReqText requirements={info.pcRequirements.recommended} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{marginTop:8}}/>
+                    <ReqText requirements={details.pcRequirements.recommended} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{marginTop:8}}/>
                     </View>
                     </>
                 :
@@ -135,7 +117,7 @@ const Details = ({ navigation , route }) => {
                 </View>
                 <Text style={styles.title}>Tags</Text>
                 <View style={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignContent:"center", justifyContent:"flex-start"}}>
-                    {info.tags.map(e => <TagPills tag={e}/>)}
+                    {details.tags.map(e => <TagPills tag={e}/>)}
                 </View>
             </View>
             : null}
