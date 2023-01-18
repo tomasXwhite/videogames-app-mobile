@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDetailsAction, getScreenshotsAction } from "../../redux/actions/details";
 import { clearDetails } from "../../redux/reducers/details/detailsReducer.slice";
 
-
 const Details = ({ navigation , route }) => {
 
     const [loadingScreenshots, setLoadingScreenshots] = useState(false)
@@ -104,21 +103,20 @@ const Details = ({ navigation , route }) => {
                 {details.pcRequirements?
                     <>
                     <View style={styles.row}>
-                        <ReqText requirements={details.pcRequirements.minimum} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{}}/>
+                        <ReqText requirements={details.pcRequirements.minimum? details.pcRequirements.minimum : "Minimum:\nNot Info Yet"} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{}} min={true}/>
                     </View>
                     <View style={styles.row}>
-                    <ReqText requirements={details.pcRequirements.recommended} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{marginTop:8}}/>
+                    <ReqText requirements={details.pcRequirements.recommended ? details.pcRequirements.recommended : "Recommended:\nNot Info Yet"} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{marginTop:8}}/>
                     </View>
                     </>
                 :
-                    <>
-                    </>
+                    null
                 }
                 </View>
                 <Text style={styles.title}>Tags</Text>
-                <View style={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignContent:"center", justifyContent:"flex-start"}}>
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignContent:"center", justifyContent:"flex-start"}}>
                     {details.tags.map(e => <TagPills tag={e}/>)}
-                </View>
+                </ScrollView>
             </View>
             : null}
         </ScrollView>
@@ -131,6 +129,7 @@ const styles = StyleSheet.create({
         alignItems:"center",
         justifyContent:"center",
         alignSelf:"center",
+        marginBottom:15,
         width:350
     },
     columnContainer: {
