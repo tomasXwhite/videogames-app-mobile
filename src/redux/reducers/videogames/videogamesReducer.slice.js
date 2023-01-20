@@ -56,7 +56,8 @@ export const {
     getGames,
     apiRequest,
     apiListEnd,
-    apiFailure
+    apiFailure,
+    resetGames
 
 } = videogamesSlice.actions;
 
