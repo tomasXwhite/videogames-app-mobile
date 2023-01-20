@@ -23,6 +23,14 @@ const videogamesSlice = createSlice({
             }
 
         },
+        resetGames(state) {
+            if (state.games.length > 0 ) {
+                state.games = []
+                state.error = ''
+                state.loading = false
+                state.moreLoading = false
+            }
+        },
         apiRequest(state, { payload }) {
             //le llega la pag
             if (payload === 1) state.loading = true

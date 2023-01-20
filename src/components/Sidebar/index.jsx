@@ -2,36 +2,37 @@ import 'react-native-gesture-handler';
 import React from "react";
 import { View, Text, Button } from "react-native";
 import Details from "../Details/Index";
+import BaseHome from '../Home/BaseHome';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-{/* <View>
-    <Text>
-        {route.params.test}
-    </Text>
-</View> */}
-
 function Feed() {
+
+  let num = 8
+
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Feed Screen</Text>
-      </View>
+        <View >
+          <Text>{num > 6 ? "num" : "not num"}</Text>
+          <BaseHome/>
+        </View>
     );
   }
   
   function Notifications() {
+
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Notifications Screen</Text>
-      </View>
+
+        <View >
+          <BaseHome/>
+        </View>
     );
   }
   
   function Profile() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Profile Screen</Text>
-      </View>
+        <View >
+          <BaseHome/>
+        </View>
     );
   }
   
@@ -58,7 +59,9 @@ function Feed() {
       </Drawer.Navigator>
     );
   }
-  export default function MyDrawerComponent(){
+
+  
+  export default function Sidebar(){
     return <MyDrawer/>             
   }
   

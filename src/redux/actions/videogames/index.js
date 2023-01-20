@@ -1,6 +1,6 @@
 // import { apiConnection } from "../../utils/axios";
 import axios from "axios";
-import { getGames, apiRequest, apiListEnd, apiFailure } from "../../reducers/videogames/videogamesReducer.slice";
+import { getGames, apiRequest, apiListEnd, apiFailure, resetGames } from "../../reducers/videogames/videogamesReducer.slice";
 
 
 export const getGamesAction = (page) => async (dispatch) => {
@@ -14,3 +14,12 @@ export const getGamesAction = (page) => async (dispatch) => {
         return dispatch(apiFailure())
     }
 };
+
+export const resetGamesAction = () => async (dispatch) => {
+    try {
+      return dispatch(resetGames())
+    } catch (error) {
+        console.log(error);
+    }
+};
+
