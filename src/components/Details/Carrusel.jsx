@@ -22,7 +22,7 @@ const Carrusel = ({ content }) => {
             mode="parallax"
             scrollAnimationDuration={1000}
             renderItem={({ item }) => (
-                <Image source={{uri: item}} style={{width: width, height: 200, margin: 10 }}/>
+                <Image source={{uri: item}} style={{width: width, height: 200, borderRadius: 5, transform: [{scale:1.2}]}}/>
             )}
         />
     </View>

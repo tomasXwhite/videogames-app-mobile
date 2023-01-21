@@ -1,27 +1,29 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native"
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 const TagPills = ({ tag }) => {
     return <TouchableOpacity style={styles.tagText}>
-        <Text style={styles.tagButton}>{tag}</Text>
-    </TouchableOpacity>
+                <Text style={styles.tagButton}>{tag}</Text>
+            </TouchableOpacity>
+    
 }
 
 const styles = StyleSheet.create({
     tagText:{
         display:"flex",
-        borderWidth:1,
-        borderColor:'rgba(0,0,0,0.2)',
         alignItems:'center',
         justifyContent:'center',
-        borderRadius:8,
-        padding:4,
-        marginHorizontal:4,
-        minWidth:30
+        marginHorizontal:3,
+        backgroundColor: "#141514",
 
     },
     tagButton:{
-        fontSize:8,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize:10,
         fontWeight:"600",
+        color: "#EAF4F4",
+        backgroundColor: "#141514",
     }
   });
 
