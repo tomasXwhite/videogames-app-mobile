@@ -12,6 +12,7 @@ const Home = ({ navigation, route }) => {
 
     const dispatch = useDispatch()
     const { games, loading, moreLoading, error, moreError, isListEnd } = useSelector((state) => state.videogames)
+    const { favorites } = useSelector((state) => state.favorites)
     const [page, setPage] = useState(1)
 
 
@@ -20,9 +21,6 @@ const Home = ({ navigation, route }) => {
     }, [page])
 
 
-    const goToDetails = (id) => {
-        navigation.navigate("Details", { id: id })
-    }
 
     const bringGames = async () => {
         dispatch(getGamesAction(page))
@@ -73,6 +71,14 @@ const Home = ({ navigation, route }) => {
         );
     };
 
+    const checkIsFav = (title) => {
+        if(favorites && favorites.filter(e => e.title === title).length){
+            return true
+        }else{
+            return false
+        }
+    }
+
 
 
     return (
@@ -82,7 +88,6 @@ const Home = ({ navigation, route }) => {
                     <View style={styles.loadingContainer}><ActivityIndicator size='large' /></View>
                     :
                     <FlatList
-
                         data={games}
                         renderItem={({ item }) => {
                             return (item !== undefined ?
@@ -92,8 +97,9 @@ const Home = ({ navigation, route }) => {
                                         description={`rating: ${item.rating}`}
                                         id={item.id}
                                         imageUrl={item.background_image}
-                                        onPress={() => goToDetails(item.id)}
                                         key={item.id}
+                                        isFavorite={checkIsFav(item.name)}
+                                        navigation={navigation}
                                     />
                                 </View>
                                 : null
