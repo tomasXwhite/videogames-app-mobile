@@ -99,23 +99,22 @@ const Details = ({ navigation , route }) => {
               <Text style={styles.title}>PC REQUIREMENTS</Text>
               <View>
               {details.pcRequirements?
-                  <>
-                  <View style={styles.row}>
-                      <ReqText requirements={details.pcRequirements.minimum} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{}}/>
-                  </View>
-                  <View style={styles.row}>
-                  <ReqText requirements={details.pcRequirements.recommended} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{marginTop:8}}/>
-                  </View>
-                  </>
-              :
-                  <>
-                  </>
-              }
+                    <>
+                    <View style={styles.row}>
+                        <ReqText requirements={details.pcRequirements.minimum? details.pcRequirements.minimum : "Minimum:\nNot Info Yet"} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{}} min={true}/>
+                    </View>
+                    <View style={styles.row}>
+                    <ReqText requirements={details.pcRequirements.recommended ? details.pcRequirements.recommended : "Recommended:\nNot Info Yet"} title={styles.subtitle} reqStyle={{fontSize: 14}} viewStyle={{marginTop:8}}/>
+                    </View>
+                    </>
+                :
+                    null
+                }
               </View>
               <Text style={styles.title}>Tags</Text>
-              <View style={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignContent:"center", justifyContent:"flex-start"}}>
-                  {details.tags.map(e => <TagPills tag={e}/>)}
-              </View>
+              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignContent:"center", justifyContent:"flex-start"}}>
+                    {details.tags.map(e => <TagPills tag={e}/>)}
+                </ScrollView>
           </View>
           : null}
       </ScrollView>

@@ -1,8 +1,19 @@
 import { Text, View } from "react-native"
 
-const ReqText = ({ requirements, title, viewStyle, reqStyle }) => {
+const ReqText = ({ requirements, title, viewStyle, reqStyle, min }) => {
 
-    const splittedReqs = requirements.split("\n")
+    let splittedReqs = requirements.split("\n")
+
+    splittedReqs = splittedReqs.filter(e => e != 0)
+
+    if(splittedReqs.length === 1){
+        if(min){
+            splittedReqs = ["Minimum:" , "Not Info Yet"]
+        }else{
+            splittedReqs = ["Recommended:" , "Not Info Yet"]
+        }
+    }
+
     const subTitle = splittedReqs.shift()
 
     return (
