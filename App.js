@@ -14,6 +14,7 @@ import {
   useFonts as mulishFonts,
   Mulish_400Regular,
 } from "@expo-google-fonts/mulish";
+import MyTabs from "./src/components/BottomBar";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +43,9 @@ export default function App() {
                 headerTitle: "Main Nashe",
               }}
             />
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Bar" component={MyTabs} options={
+              {headerShown:false}
+            }/>
             <Stack.Screen
               name="Details"
               component={Details}

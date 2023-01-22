@@ -1,12 +1,26 @@
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { setFavouriteAction } from '../../redux/actions/favorites';
 
 //Card recibe Title, Image url y Description por props
-const Card = ({title, imageUrl, description, id, onPress}) => {
+const Card = ({title, imageUrl, description, id, isFavorite, navigation}) => {
+
+  const dispatch = useDispatch()
+
+  const clickHeart = () =>{
+    dispatch(setFavouriteAction({title, imageUrl, description, id, isFavorite}))
+  }
+
+  const goToDetails = () => {
+    navigation.navigate("Details", { id: id })
+  }
+
   return (
-    <TouchableOpacity onPress={() => onPress(id, title)}>
+    <TouchableOpacity onPress={goToDetails}>
     <View style={styles.cardContainer}>
+      <MaterialCommunityIcons name="heart" color={isFavorite? "red" : "black"} size={26} onPress={clickHeart} style={{zIndex:2}}/>
       <Text style={styles.cardTitle}>{title ? title : "ALVVVVVVVVVV"}</Text>
       <Image
         style={styles.cardImage}
