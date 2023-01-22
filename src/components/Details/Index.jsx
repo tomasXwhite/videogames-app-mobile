@@ -56,28 +56,16 @@ const Details = ({ navigation , route }) => {
                     {details.platforms.map(e => <TagPills tag={e}/>)}
                   </View>
               </View>
-              <Title style={styles.title}>Description</Title>
-              <ViewMoreText
-                  numberOfLines={4}
-                  renderViewMore={(onPress) => <Text onPress={onPress} style={{color:"blue"}}>View more</Text>}
-                  renderViewLess={(onPress) => <Text onPress={onPress} style={{color:"blue"}}>View less</Text>}
-              >
-                  <Text style={styles.text}>
-                      {details.description}
-                  </Text>
-              </ViewMoreText>
-              {loadingScreenshots? <ActivityIndicator/> : screenshots.length? <Carrusel content={screenshots}/> : <Text> No hay fotos </Text>}
-              <Text style={styles.title}>INFO</Text>
               <View style={styles.row}>
                       <View style={styles.leftColumn}>
                           <Text style={styles.subtitle}>Metacritic</Text>
-                          <Text>{details.metacritic}/100</Text>
+                          <Text style={styles.subtitle}>{details.metacritic}/100</Text>
                       </View>
               </View>
               <View style={styles.row}>
                   <View style={styles.leftColumn}>
                       <Text style={styles.subtitle}>General Rating</Text>
-                      <Text>{details.rating}/5</Text>
+                      <Text style={styles.subtitle}>{details.rating}/5</Text>
                   </View>
                   <View style={styles.rightColumn}>
                       <Text style={styles.subtitle}>Genres</Text>
@@ -89,13 +77,24 @@ const Details = ({ navigation , route }) => {
               <View style={styles.row}>
                   <View style={styles.leftColumn}>
                       <Text style={styles.subtitle}>Release Date</Text>
-                      <Text>{details.releaseDate}</Text>
+                      <Text style={styles.subtitle}>{details.releaseDate}</Text>
                   </View>
                   <View style={styles.rightColumn}>
                       <Text style={styles.subtitle}>Website</Text>
-                      <A href={details.website} style={{fontSize:12, textDecorationLine: 'underline'}}>{details.website}</A>
+                      <A href={details.website} style={{fontSize:12, textDecorationLine: 'underline', color: "#EAF4F4"}}>{details.website}</A>
                   </View>
               </View>
+              {loadingScreenshots? <ActivityIndicator/> : screenshots.length? <Carrusel content={screenshots}/> : <Text> No hay fotos </Text>}
+              <Title style={styles.title}>Description</Title>
+              <ViewMoreText
+                  numberOfLines={4}
+                  renderViewMore={(onPress) => <Text onPress={onPress} style={{color:"blue"}}>View more</Text>}
+                  renderViewLess={(onPress) => <Text onPress={onPress} style={{color:"blue"}}>View less</Text>}
+              >
+                  <Text style={styles.text}>
+                      {details.description}
+                  </Text>
+              </ViewMoreText>
               <Text style={styles.title}>PC REQUIREMENTS</Text>
               <View>
               {details.pcRequirements?
@@ -138,16 +137,17 @@ const styles = StyleSheet.create({
   },
   name:{ 
     margin: 5,
-    color: "#EAF4F4"
+    color: "#EAF4F4",
     },
   columnContainer: {
       display:"flex",
       flexDirection:"row",
       justifyContent:"space-between",
-      width:350
+      width:350,
+      
   },
   leftColumn: {
-      width:175
+      width:175,
   },
   rightColumn:{
         width:175
@@ -165,7 +165,8 @@ const styles = StyleSheet.create({
   },
   subtitle: {
       fontSize: 16,
-      fontWeight: "600"
+      fontWeight: "600",
+      color: "#EAF4F4",
   },
   title:{
       fontSize: 20,
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
       alignSelf:"flex-start",
       marginLeft:16,
       marginTop:8,
-      color: "#cdd9f1",
+      color: "#EAF4F4",
   },
   text:{
     fontSize: 14,
