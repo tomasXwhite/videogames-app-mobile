@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDetailsAction, getScreenshotsAction } from "../../redux/actions/details";
 import { clearDetails } from "../../redux/reducers/details/detailsReducer.slice";
 import { Title } from 'react-native-paper';
-import Mulish_400Regular from "@expo-google-fonts/mulish";
+import { s } from "react-native-wind";
 
 const Details = ({ navigation , route }) => {
 
@@ -48,8 +48,8 @@ const Details = ({ navigation , route }) => {
       loadingInfo? <ActivityIndicator/> :
       <ScrollView>
           {details? 
-          <View style={styles.infoContainer}>
-              <Image source={{uri: details.imageUrl}} style={styles.image}/> 
+          <View style={[stylesWind.container, styles.infoContainer]}>
+              <Image source={{uri: details.imageUrl}} style={stylesWind.image}/>
               <Title style={styles.name}>{details.name}</Title>
               <View>
                   <View style={{display:"flex", flexDirection:"row", flexWrap:"wrap"}}>
@@ -120,20 +120,14 @@ const Details = ({ navigation , route }) => {
   )
 }
 
+const stylesWind = {
+    container:s`flex flex-col items-center justify-center t.fontSerif`,
+    image: s`w-full h-1/6 rounded-bl-2xl rounded-br-2xl`,
+};
+
 const styles = StyleSheet.create({
   infoContainer: {
-      flex: 1,
-      flexDirection: "column",
-      alignItems:"center",
-      justifyContent:"center",
-      fontFamily: Mulish_400Regular,
       backgroundColor: "#141514"
-  },
-  image:{
-    width:"100%",
-    height: 250,
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
   },
   name:{ 
     margin: 5,
