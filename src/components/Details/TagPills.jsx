@@ -13,14 +13,14 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         marginHorizontal:3,
-        backgroundColor: "#141514",
+        backgroundColor: "#EAF4F4",
 
     },
     tagButton:{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize:10,
+        fontSize:12,
         fontWeight:"600",
         color: "#EAF4F4",
         backgroundColor: "#141514",

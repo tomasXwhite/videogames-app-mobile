@@ -47,15 +47,15 @@ const Metacritic = ({ metacritic }) => {
 
 const styles = StyleSheet.create({
     surface: {
-        marginTop:10,
+        margin: 5,
         alignItems: 'center',
         justifyContent:"space-evenly",
-        width: 55,
-        height: 55,
+        width: 65,
+        height: 50,
         borderRadius: 7,
       },
     title: {
-        fontSize: 10,
+        fontSize: 12,
         fontWeight: "600",
         color: "#141514",
     },

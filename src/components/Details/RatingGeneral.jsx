@@ -18,17 +18,16 @@ const RatingGeneral = ({ rating }) => {
 
 const styles = StyleSheet.create({
   surface:{
-      marginTop:10,
-      alignItems: 'center',
-      justifyContent:"space-evenly",
-      width: 120,
-      height: 55,
-      borderRadius: 7,
-      backgroundColor: "#EAF4F4",
-      
+    margin: 5,
+    alignItems: 'center',
+    justifyContent:"space-evenly",
+    width: 130,
+    height: 50,
+    borderRadius: 7,
+    backgroundColor: "white", 
   },
   title:{
-    fontSize: 10,
+    fontSize: 12,
     color: "#141514",
     fontWeight: "600",
   },

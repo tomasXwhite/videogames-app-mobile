@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { View, Text, ActivityIndicator, Image, StyleSheet, ScrollView} from "react-native"
+import { View, Text, ActivityIndicator, Image, StyleSheet, ScrollView, TouchableOpacity } from "react-native"
 import ViewMoreText from 'react-native-view-more-text';
 import Carrusel from "./Carrusel"
 import axios from "axios"
@@ -13,6 +13,7 @@ import { Title } from 'react-native-paper';
 import { s } from "react-native-wind";
 import Metacritic from "./Metacritic";
 import RatingGeneral from "./RatingGeneral";
+import { Surface } from 'react-native-paper';
 
 const Details = ({ navigation , route }) => {
 
@@ -23,67 +24,80 @@ const Details = ({ navigation , route }) => {
   const dispatch = useDispatch()
 
   useEffect(()=> {
-      if(!screenshots.length){
-          fetchImages(route.params.id)
-      }
-      if(!details){
-          fetchInfo(route.params.id)
-      }
+    if(!screenshots.length){
+      fetchImages(route.params.id)
+    }
+    if(!details){
+      fetchInfo(route.params.id)
+    }
       return(() => {
-          dispatch(clearDetails())
+        dispatch(clearDetails())
       })
   }, [])
 
   const fetchImages = async (id) => {
-      setLoadingScreenshots(true)
+    setLoadingScreenshots(true)
       await dispatch(getDetailsAction(id))
-      setLoadingScreenshots(false)
+    setLoadingScreenshots(false)
   }
 
   const fetchInfo = async (id) => {
-      setLoadingInfo(true)
+    setLoadingInfo(true)
       await dispatch(getScreenshotsAction(id))
-      setLoadingInfo(false)
+    setLoadingInfo(false)
   }
 
+  const TagPillsGenres = ({ tag }) => {
+    return <TouchableOpacity>
+              <Text style={styles.tagButton}>{tag}</Text>
+            </TouchableOpacity>
+    
+}
+
   return (
-      loadingInfo? <ActivityIndicator/> :
+    loadingInfo? <ActivityIndicator/> :
       <ScrollView>
-          {details? 
+        {details? 
           <View style={[stylesWind.container, styles.infoContainer]}>
-              <Image source={{uri: details.imageUrl}} style={stylesWind.image}/>
-              <Title style={styles.name}>{details.name}</Title>
-              <View>
-                  <View style={{display:"flex", flexDirection:"row", flexWrap:"wrap"}}>
-                    {details.platforms.map(e => <TagPills tag={e}/>)}
-                  </View>
+            <Image source={{uri: details.imageUrl}} style={stylesWind.image}/>
+            <Title style={styles.name}>{details.name}</Title>
+            <View>
+              <View style={{display:"flex", flexDirection:"row", flexWrap:"wrap"}}>
+                {details.platforms.map(e => <TagPills tag={e}/>)}
               </View>
-              <View style={styles.row}>
-                      <View style={styles.leftColumn}>
-                      <Metacritic metacritic={details.metacritic}></Metacritic>
-                      </View>
+            </View>
+            <View style={styles.boxInfo}>
+              <View style={styles.meta}>
+                <View>
+                  <RatingGeneral rating={details.rating}></RatingGeneral>
+                </View>
+                <View>
+                    <Metacritic metacritic={details.metacritic}></Metacritic>
+                  </View>
+                <View>
+                  <Surface style={[styles.surfaceGenres, ]} elevation={4}>
+                    <Text style={styles.titleGenres}>Genres</Text>
+                    <View style={{flexDirection:"row"}}>
+                      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignContent:"center", justifyContent:"flex-start"}}>
+                        {details.genres.map(e => <TagPillsGenres tag={e} style={styles.tagButton}/>)}
+                      </ScrollView>
+                    </View>
+                  </Surface>
+                </View>
               </View>
-              <View style={styles.row}>
-                  <View style={styles.leftColumn}>
-                    <RatingGeneral rating={details.rating}></RatingGeneral>
-                  </View>
-                  <View style={styles.rightColumn}>
-                      <Text style={styles.subtitle}>Genres</Text>
-                      <View style={{display:"flex", flexDirection:"row"}}>
-                          {details.genres.map(e => <TagPills tag={e}/>)}
-                      </View>
-                  </View>
+              <View style={styles.meta}>
+                <View >
+                  <Text>Website</Text>
+                  <A href={details.website} style={{ color: "#EAF4F4"}}>{details.website}</A>
+                </View>
+                <View>
+                  <View>
+                    <Text style={styles.subtitle}>Release Date</Text>
+                    <Text style={styles.subtitle}>{details.releaseDate}</Text>
+                  </View>  
+                </View>
               </View>
-              <View style={styles.row}>
-                  <View style={styles.leftColumn}>
-                      <Text style={styles.subtitle}>Release Date</Text>
-                      <Text style={styles.subtitle}>{details.releaseDate}</Text>
-                  </View>
-                  <View style={styles.rightColumn}>
-                      <Text style={styles.subtitle}>Website</Text>
-                      <A href={details.website} style={{fontSize:12, textDecorationLine: 'underline', color: "#EAF4F4"}}>{details.website}</A>
-                  </View>
-              </View>
+            </View>
               {loadingScreenshots? <ActivityIndicator/> : screenshots.length? <Carrusel content={screenshots}/> : <Text> No hay fotos </Text>}
               <Title style={styles.title}>Description</Title>
               <ViewMoreText
@@ -111,11 +125,11 @@ const Details = ({ navigation , route }) => {
                 }
               </View>
               <Text style={styles.title}>Tags</Text>
-              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignContent:"center", justifyContent:"flex-start"}}>
+              <ScrollView horizontal={true} showsHorizontalScrollIndicator={true} contentContainerStyle={{display:"flex", flexDirection:"row", flexWrap:"wrap", alignContent:"center", justifyContent:"flex-start"}}>
                     {details.tags.map(e => <TagPills tag={e}/>)}
                 </ScrollView>
           </View>
-          : null}
+        : null}
       </ScrollView>
   )
 }
@@ -133,24 +147,24 @@ const styles = StyleSheet.create({
     margin: 5,
     color: "#EAF4F4",
     },
-  columnContainer: {
-      display:"flex",
-      flexDirection:"row",
-      justifyContent:"space-between",
-      width:350,
-      
+  boxInfo:{
+    display:"flex",
+    flexDirection:"column",
   },
-  leftColumn: {
-      width:175,
+  meta:{
+    display:"flex",
+    flexDirection: "row",
+    alignItems:"center",
+    justifyContent:"space-around",
   },
-  rightColumn:{
-        width:175
-  },
-  row: {
-      width: 350,
-      display: "flex",
-      flexDirection:"row",
-      justifyContent:"space-between"
+  surfaceGenres: {
+    margin: 5,
+    alignItems: 'center',
+    justifyContent:"space-evenly",
+    width: 130,
+    height: 50,
+    borderRadius: 7,
+    backgroundColor:"white",
   },
   screenContainer: {
       display:"flex",
@@ -170,14 +184,27 @@ const styles = StyleSheet.create({
       marginTop:8,
       color: "#EAF4F4",
   },
-  text:{
-    fontSize: 14,
-    fontWeight: "normal",
-    alignSelf:"flex-start",
-    marginLeft:16,
-    marginTop:8,
-    color: "#cdd9f1",
+  titleGenres: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#141514",
 },
+tagText:{
+  display:"flex",
+  alignItems:'center',
+  justifyContent:'center',
+  backgroundColor: "#141514",
+
+},
+tagButton:{
+  margin: 5,
+  borderRadius: 2,
+  color: "#141514",
+  backgroundColor: "white",
+  fontSize: 14,
+  fontWeight: "600",
+  marginBottom: 3,
+}
 });
 
 export default Details;
