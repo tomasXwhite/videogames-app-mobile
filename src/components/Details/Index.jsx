@@ -11,6 +11,7 @@ import { getDetailsAction, getScreenshotsAction } from "../../redux/actions/deta
 import { clearDetails } from "../../redux/reducers/details/detailsReducer.slice";
 import { Title } from 'react-native-paper';
 import { s } from "react-native-wind";
+import Metacritic from "./Metacritic";
 
 const Details = ({ navigation , route }) => {
 
@@ -58,8 +59,7 @@ const Details = ({ navigation , route }) => {
               </View>
               <View style={styles.row}>
                       <View style={styles.leftColumn}>
-                          <Text style={styles.subtitle}>Metacritic</Text>
-                          <Text style={styles.subtitle}>{details.metacritic}/100</Text>
+                      <Metacritic metacritic={details.metacritic}></Metacritic>
                       </View>
               </View>
               <View style={styles.row}>
@@ -122,7 +122,7 @@ const Details = ({ navigation , route }) => {
 
 const stylesWind = {
     container:s`flex flex-col items-center justify-center t.fontSerif`,
-    image: s`w-full h-1/6 rounded-bl-2xl rounded-br-2xl`,
+    image: s`w-full h-56 rounded-bl-2xl rounded-br-2xl`,
 };
 
 const styles = StyleSheet.create({
