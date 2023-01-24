@@ -12,6 +12,7 @@ import { clearDetails } from "../../redux/reducers/details/detailsReducer.slice"
 import { Title } from 'react-native-paper';
 import { s } from "react-native-wind";
 import Metacritic from "./Metacritic";
+import RatingGeneral from "./RatingGeneral";
 
 const Details = ({ navigation , route }) => {
 
@@ -64,8 +65,7 @@ const Details = ({ navigation , route }) => {
               </View>
               <View style={styles.row}>
                   <View style={styles.leftColumn}>
-                      <Text style={styles.subtitle}>General Rating</Text>
-                      <Text style={styles.subtitle}>{details.rating}/5</Text>
+                    <RatingGeneral rating={details.rating}></RatingGeneral>
                   </View>
                   <View style={styles.rightColumn}>
                       <Text style={styles.subtitle}>Genres</Text>
